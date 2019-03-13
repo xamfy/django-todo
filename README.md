@@ -1,1 +1,1 @@
-# django-todo-upgrad
+# django-todo
