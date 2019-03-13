@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.views.generic.list import ListView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import path, reverse
 
 
@@ -15,6 +15,8 @@ from .permissions import IsOwnerOrReadOnly
 
 from .forms import ScheduleUpdateForm, ScheduleCreateForm
 from django.views.generic.edit import CreateView
+
+from django.urls import reverse_lazy
 
 
 @api_view(['GET'])
@@ -58,6 +60,17 @@ class ScheduleCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('home')
+
+
+class ScheduleDeleteView(DeleteView):
+    model = Schedule
+
+    def get_success_url(self):
+        return reverse('home')
+
+    # def get_queryset(self):
+    #     owner = self.request.user
+    #     return self.model.objects.filter(user=owner)
 
 
 class ScheduleList(generics.ListCreateAPIView):

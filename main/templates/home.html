@@ -32,7 +32,21 @@
                     onclick="send('{{device.name}}');"
                     class="btn btn-primary"
                     > -->
-      {% if schedule.completed %} Completed {% else %} Pending {% endif %}
+      {% if schedule.completed %}
+      
+      Completed 
+      <form method="post" action="{% url 'delete' schedule.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">
+          Delete
+        </button>
+      </form>
+      
+      {% else %}
+      
+      Pending
+    
+      {% endif %}
       <!-- </button> -->
     </td>
   </tr>

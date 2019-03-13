@@ -5,6 +5,8 @@ urlpatterns = [
     path('', views.ScheduleListView.as_view(), name="home"),
     path('add/',
          views.ScheduleCreateView.as_view(success_url=""), name="add"),
+    path('delete/<int:pk>/',
+         views.ScheduleDeleteView.as_view(success_url=""), name="delete"),
     path('update/<int:pk>/',
          views.ScheduleUpdateView.as_view(success_url=""), name="update"),
     path('api/', views.api_root),
