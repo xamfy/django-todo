@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
 from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
+from django.urls import path, reverse
+
 
 from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
@@ -9,6 +12,8 @@ from rest_framework.reverse import reverse
 from .models import Schedule
 from .serializers import ScheduleSerializer, UserSerializer
 from .permissions import IsOwnerOrReadOnly
+
+from .forms import ScheduleForm
 
 
 @api_view(['GET'])
@@ -27,6 +32,16 @@ class ScheduleListView(ListView):
     def get_queryset(self):
         if(self.request.user.is_authenticated):
             return Schedule.objects.filter(user=self.request.user)
+
+
+class ScheduleUpdateView(UpdateView):
+    model = Schedule
+    form_class = ScheduleForm
+    # fields = ['name', 'date', 'completed']
+    template_name = 'update.html'
+
+    def get_success_url(self):
+        return reverse('home')
 
 
 class ScheduleList(generics.ListCreateAPIView):

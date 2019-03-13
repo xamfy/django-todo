@@ -3,6 +3,8 @@ from main import views
 
 urlpatterns = [
     path('', views.ScheduleListView.as_view(), name="home"),
+    path('update/<int:pk>/',
+         views.ScheduleUpdateView.as_view(success_url=""), name="update"),
     path('api/', views.api_root),
     path('schedules/', views.ScheduleList.as_view(), name='schedule-list'),
     path('schedules/<int:pk>/', views.ScheduleDetail.as_view(),
