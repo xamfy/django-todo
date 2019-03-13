@@ -3,8 +3,9 @@
 {% block content %} 
 
 {% if not user.is_authenticated %}
-<p>Please login to create schedules</p>
+<p>Please <a href="{% url 'login' %}">login</a> to create schedules</p>
 {% else %}
+<p><a href="{% url 'logout' %}">logout</a></p>
 
 <a href="{% url 'add' %}">Add schedule</a>
 
