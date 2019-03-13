@@ -13,7 +13,8 @@ from .models import Schedule
 from .serializers import ScheduleSerializer, UserSerializer
 from .permissions import IsOwnerOrReadOnly
 
-from .forms import ScheduleForm
+from .forms import ScheduleUpdateForm, ScheduleCreateForm
+from django.views.generic.edit import CreateView
 
 
 @api_view(['GET'])
@@ -36,9 +37,24 @@ class ScheduleListView(ListView):
 
 class ScheduleUpdateView(UpdateView):
     model = Schedule
-    form_class = ScheduleForm
+    form_class = ScheduleUpdateForm
     # fields = ['name', 'date', 'completed']
     template_name = 'update.html'
+
+    def get_success_url(self):
+        return reverse('home')
+
+
+class ScheduleCreateView(CreateView):
+    model = Schedule
+    form_class = ScheduleCreateForm
+    # fields = ['name', 'date', 'completed']
+    template_name = 'add.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        # form.instance.user = Schedule.objects.get(user=self.request.user)
+        return super(ScheduleCreateView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse('home')

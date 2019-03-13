@@ -1,9 +1,20 @@
-{% extends 'base.html' %} {% block content %} {% if not user.is_authenticated %}
+{% extends 'base.html' %} 
+
+{% block content %} 
+
+{% if not user.is_authenticated %}
 <p>Please login to create schedules</p>
-{% else %} {% if schedules %}
+{% else %}
+
+<a href="{% url 'add' %}">Add schedule</a>
+
+{% if schedules %}
+<p>
+  <h2>{{request.user.username}}'s schedules</h2>
+</p>
 <table style="width:30%">
   <tr>
-    <th>Scheduled Date</th>
+    <th>Schedule Date</th>
     <th>Name</th>
     <th>Status</th>
   </tr>
@@ -30,4 +41,8 @@
 
 {% else %}
 <p>There are no schedules for you.</p>
-{% endif %} {% endif %} {% endblock %}
+{% endif %} 
+
+{% endif %} 
+
+{% endblock %}
